@@ -56,7 +56,12 @@
                 "type": "select",
                 "options": ["Modern sans-serif", "Elegant serif"],
                 "default": "Modern sans-serif"
-            }
+            },
+	    "site_background_color": {
+                "type":"color",
+                "default":"#FAF6E9",
+		"description":"Change the background color of the site."
+	    }
         }
     },
     "scripts": {
