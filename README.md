@@ -3,6 +3,8 @@
 A minimal, typography-heavy newsletter theme for [Ghost](https://github.com/TryGhost/Ghost).
 
 **Demo: https://journal.ghost.io**
+**Demo1: https://goodhub.cn**
+![](./assets/images/screenshot.png)
 
 # Instructions
 
