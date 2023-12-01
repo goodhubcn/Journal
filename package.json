@@ -59,7 +59,7 @@
             },
 	    "site_background_color": {
                 "type":"color",
-                "default":"#8b25fb",
+                "default":"#C7EDCC",
 		"description":"Change the background color of the site."
 	    }
         }
