@@ -1,0 +1,69 @@
+<style>
+
+.navigation li {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navigation li.nav-default {
+    border-bottom: 2px solid transparent;
+}
+
+.navigation li.nav-current {
+    list-style-type: none;
+    border-bottom: 2px solid #8b25fb;
+}
+
+.nav-default {
+    position: relative;
+    /*padding: 2px;*/
+    color: #000;
+    transition: 0.1s all linear;
+    cursor: pointer;
+}
+
+.nav-default::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 0;
+    height: 100%;
+    border-bottom: 2px solid #8b25fb;
+    transition: 0.2s all linear;
+}
+
+.nav-default:hover::before {
+    width: 100%;
+    top: 0;
+    left: 0;
+    transition-delay: 0.1s;
+    border-bottom-color: #8b25fb;
+}
+
+.nav-default:hover ~ .nav-default::before {
+    left: 0;
+}
+
+</style>
+
+{{#if isSecondary}}
+    <ul class="nav">
+        <!-- Loop through the navigation items -->
+        {{#foreach navigation}}
+        <li class="nav-{{slug}}{{#if current}} nav-current{{/if}}"><a href="{{url absolute="true"}}">{{label}}</a></li>
+        {{/foreach}}
+        <!-- End the loop -->
+    </ul>
+    
+{{else}}
+
+    <ul id="nav-list" class="nav navigation">
+        <!-- Loop through the navigation items -->
+        {{#foreach navigation}}
+        <li class="nav-{{slug}}{{#if current}} nav-current {{else}} nav-default {{/if}}"><a href="{{url absolute="true"}}">{{label}}</a></li>
+        {{/foreach}}
+        <!-- End the loop -->
+    </ul>
+
+{{/if}}
