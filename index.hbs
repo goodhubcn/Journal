@@ -115,7 +115,7 @@
                         <div class="gh-topic">
                             {{#foreach topic}}
                                 <a class="gh-topic-item" href="{{url}}">
-                                    <h3 class="gh-topic-name">{{name}}</h3>
+                                    <h3 class="gh-topic-name"># {{name}}</h3>
                                     <span class="gh-topic-count">
                                         {{plural count.posts empty=(t "zero issues") singular=(t "d issue") plural=(t "dd issues")}}
                                     </span>

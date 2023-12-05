@@ -1,12 +1,25 @@
 {{!< default}}
 
+<style>
+.gh-topic-item {
+    display: block;
+}
+</style>
+
 <main id="gh-main" class="gh-main gh-canvas">
     {{#get "tags" include="count.posts" limit="all" as |topic|}}
         <section class="gh-section">
             <div class="gh-topic">
                 {{#foreach topic}}
                     <a class="gh-topic-item" href="{{url}}">
-                        <h3 class="gh-topic-name">{{name}}</h3>
+                        <h3 class="gh-topic-name"># {{name}}</h3>
+                        <div class="gh-tag-description gh-pagehead-description">
+                            {{#if description}}
+                                {{description}}
+                            {{else}}
+                                A collection of {{plural ../pagination.total empty=(t "zero issues") singular=(t "d issue") plural=(t "dd issues")}}
+                            {{/if}}
+                        </div>
                         <span class="gh-topic-count">
                             {{plural count.posts empty=(t "zero issues") singular=(t "d issue") plural=(t "dd issues")}}
                         </span>
