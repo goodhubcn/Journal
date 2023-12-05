@@ -4,9 +4,12 @@
 .gh-topic-item {
     display: block;
 }
+.gh-main-tag {
+    padding: 80px 36px;
+}
 </style>
 
-<main id="gh-main" class="gh-main gh-canvas">
+<main id="gh-main-tag" class="gh-main-tag gh-canvas">
     {{#get "tags" include="count.posts" limit="all" as |topic|}}
         <section class="gh-section">
             <div class="gh-topic">
