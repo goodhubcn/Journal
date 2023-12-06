@@ -1,0 +1,282 @@
+{{!< default}}
+
+<style>
+
+.gh-content ul {
+    padding-left: 0px; 
+}
+
+.post_published_day .post_published_time {
+    font-size: 2rem; font-wight: bold;
+}
+
+.archive__excerpt {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.scientist a {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.timeline ul li {
+    list-style-type: none;
+    position: relative;
+    width: 0px;
+    margin: 0px;
+    padding-top: 20px;
+    /*background: #fff;*/
+    box-shadow: 4px 13px 30px 1px rgba(1, 0, 56, 0.1);
+}
+.timeline ul li::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) rotate(45deg);
+    width: 0px;
+    height: 20px;
+    z-index: 2;
+    box-shadow: 4px 13px 30px 1px rgba(1, 0, 56, 0.1);
+    /*background: #eee;*/
+}
+.timeline ul li div {
+    position: relative;
+    bottom: 0;
+    width: 720px;
+    padding: 15px;
+    /*background: #fff;*/
+    box-shadow: 4px 13px 30px 1px rgba(1, 0, 56, 0.1);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+.timeline ul li div time {
+    position: absolute;
+    /*background: #f5af10;*/
+    width: 150px;
+    height: 30px;
+    top: -15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 2px;
+}
+.timeline ul li div div {
+    /*height: 80px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.timeline ul li div div p {
+    text-align: center;
+}
+.timeline ul li div .discovery {
+    margin-right: 10px;
+}
+.timeline ul li:nth-of-type(odd) > div {
+    /*left: 45px;*/
+    left: 0px;
+}
+.timeline ul li:nth-of-type(even) > div {
+    /*left: -439px;*/
+    /*left: 45px;*/
+    left: 0px;
+}
+
+.timeline ul li div {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+.timeline ul li:nth-of-type(odd) div {
+    transform: translate3d(100px, -10px, 0) rotate(10deg);
+}
+.timeline ul li:nth-of-type(even) div {
+    transform: translate3d(-100px, -10px, 0) rotate(10deg);
+}
+.timeline ul li.in-view div {
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+}
+
+@media screen and (max-width: 900px) {
+    .timeline ul li div {
+        width: 250px;
+        flex-direction: column;
+    }
+    .timeline ul li div div {
+        width: 80%;
+        margin: 10px;
+    }
+    .timeline ul li:nth-of-type(even) > div {
+        left: -289px;
+    }
+}
+@media screen and (max-width: 600px) {
+    body {
+        /*background: #8bfff4;*/
+    }
+
+    .timeline ul li {
+        /*margin-left: 20px;*/
+        margin-left: 0px;
+    }
+    .timeline ul li div {
+        width: calc(100vw - 91px);
+    }
+    .timeline ul li:nth-of-type(even) > div {
+        /*left: 45px;*/
+        left: 0px;
+    }
+}
+
+</style>
+
+{{! Archive Page }}
+<main id="gh-main-list" class='gh-main-list gh-canvas'>
+
+  {{#get 'posts' limit='all' order='published_at desc'}}
+
+    <div class='gh-inner-list gh-content gh-canvas'>
+
+        <div class='archive__excerpt'>
+            {{t
+              "all_posts_tips"
+              total=pagination.total
+            }}
+        </div>
+
+        <!--时间轴内容 -->
+        <div class="doc-container m-padded-tb-massivex m-opacity" id="doc-container">
+          <th:block >
+            <section class="timeline">
+              <ul>
+
+                {{#foreach posts visibility='all'}}
+                        
+                <div this_day_end="{{t 'day_end'}}" this_year_month="{{date format=(t 'YYYY-MM')}}" class='this-post-items' this_day='{{date format=(t 'DD')}}' this_url='{{url}}' this_title='{{title}}'></div>
+
+                {{/foreach}}
+
+              </ul>
+            </section>
+          </th:block>
+        </div>
+
+    </div>
+    
+  {{/get}}
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+// =================================================
+// post archive: add year-month break 2023.12.05
+// =================================================
+// Year-Month Break
+//
+var monthArr = new Array();
+var objs = new Object();
+
+$(".this-post-items").each(function() {
+    var monthObj = $(this).attr("this_year_month");
+    var urlObj   = $(this).attr("this_url");
+    var titleObj = $(this).attr("this_title");
+    var dayObj  = $(this).attr("this_day");
+    var dayEndObj  = $(this).attr("this_day_end");
+
+    monthArr.push(monthObj);
+
+    if (monthObj in objs) {
+        var obj      = new Object();
+        obj["url"]   = urlObj;
+        obj["title"] = titleObj;
+        obj["day"]   = dayObj;
+        obj["day_end"]   = dayEndObj;
+
+        objs[monthObj].push(obj);
+    } else {
+        objs[monthObj] = new Array();
+        
+        var obj      = new Object();
+        obj["url"]   = urlObj;
+        obj["title"] = titleObj;
+        obj["day"]   = dayObj;
+        obj["day_end"]   = dayEndObj;
+    
+        objs[monthObj].push(obj);
+    }
+});
+
+var uniqueMonth = $.unique(monthArr);
+
+for (var i = 0; i < uniqueMonth.length; i++) {
+
+    var first = $("[this_year_month='" + uniqueMonth[i] + "']:first");
+
+    var html = "<li class='' th:each='blog : ${blogs}'> <div style='margin-top: 20px'> <time style='font-size: 2rem; font-weight: bold;' datetime='" + uniqueMonth[i] + "'" + "class='post_published_time' >" + uniqueMonth[i] + " </time> <div class='scientist' >";
+
+    var list = objs[uniqueMonth[i]];
+
+    for ( var j = 0; j < list.length; j++ ) {
+
+        var obj   = list[j];
+        var url   = obj["url"];
+        var title = obj["title"];
+        var day   = obj["day"];
+        var day_end   = obj["day_end"];
+
+        html += "<a href='" + url + "'>" + "<span style='font-size: 2rem; font-weight: bold;' class='post_published_day'>" + day + day_end + "</span> &nbsp;" + title + "</a>";
+    }
+    
+    html += "</div> </div> </li>";
+    
+    first.before(html);
+}
+
+$('.this-post-items').remove();
+
+
+var items = document.querySelectorAll(".timeline li");
+
+function isElementInViewport(el) {
+    var rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+function callbackFunc() {
+    for (var i = 0; i < items.length; i++) {
+        if (true/*isElementInViewport(items[i])*/) {
+            if(!items[i].classList.contains("in-view")){
+                items[i].classList.add("in-view");
+            }
+        } else if(items[i].classList.contains("in-view")) {
+            items[i].classList.remove("in-view");
+        }
+    }
+}
+
+window.addEventListener("load", callbackFunc);
+window.addEventListener("scroll", callbackFunc);
+
+</script>
